@@ -12,7 +12,7 @@ module.exports = {
 
         if (certStore.has("My Name")) {
             let certificate = certStore.get("My Name");
-            let publicKey = crypto.createPublicKey(certificate).export({type:'spki', format:'pem'});
+            let publicKey = crypto.createPublicKey(certificate).export({type:'spki', format:'der'});
     
             console.log(verifySignature(publicKey, req.body.signature, JSON.stringify(req.body.data)));
     
