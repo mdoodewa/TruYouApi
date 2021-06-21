@@ -1,4 +1,5 @@
-<script type="module" src="./DigiSigner"></script>
+import DigiSigner from './DigiSinger';
+
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
