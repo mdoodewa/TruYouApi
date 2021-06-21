@@ -11,7 +11,7 @@ module.exports = {
         let certStore = new Map([["My Name", cert]]);
 
         if (certStore.has(req.body.data.name)) {
-            let certificate = certStore.get(req.body.data.name);
+            let certificate = certStore.get("My Name");
             let publicKey = crypto.createPublicKey(certificate).export({type:'spki', format:'pem'});
     
             console.log(verifySignature(publicKey, req.body.signature, JSON.stringify(req.body.data)));
