@@ -15,25 +15,28 @@ const privateKey = fs.readFileSync(path.join(__dirname,
 module.exports = {
 
     update_stream_data: (req, res, next) => {
-            
-        let certStore = new Map([["My Name", cert]]);
-
-        if (certStore.has("My Name")) {
-            let certificate = certStore.get("My Name");
-            // let publicKey = crypto.createPublicKey(certificate).export({type:'spki', format:'pem'});
-            let valueVerify = signer.verifySignature(publicKey, privateKey, actualData);
+        let actualData = "myName";
+        let valueSign = signer.signData(actualData, privateKey);
+        let valueVerify = signer.verifySignature(publicKey, valueSign, actualData);
 
             console.log(valueVerify);
 
             console.log(signer.signData());
     
             res.writeHead(200);
+            
+        // let certStore = new Map([["My Name", cert]]);
+
+        // if (certStore.has("My Name")) {
+        //     let certificate = certStore.get("My Name");
+        //     // let publicKey = crypto.createPublicKey(certificate).export({type:'spki', format:'pem'});
+            
     
-        }
-        else {
-            res.writeHead(400);
-        }
-        res.end();
+        // }
+        // else {
+        //     res.writeHead(400);
+        // }
+        // res.end();
     
     },
 
