@@ -1,4 +1,4 @@
-import DigiSigner from './DigiSinger';
+const DigiSigner = require('./DigiSinger');
 
 const fs = require('fs');
 const path = require('path');
