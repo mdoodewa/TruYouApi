@@ -15,9 +15,11 @@ const privateKey = fs.readFileSync(path.join(__dirname,
 module.exports = {
 
     update_stream_data: (req, res, next) => {
+        let publicKeyPem = derToPem(publicKey);
+        let privateKeyPem = derToPem(privateKey);
         let actualData = "myName";
-        let valueSign = signer.signData(actualData, privateKey);
-        let valueVerify = signer.verifySignature(publicKey, valueSign, actualData);
+        let valueSign = signer.signData(actualData, privateKeyPem);
+        let valueVerify = signer.verifySignature(publicKeyPem, valueSign, actualData);
 
             console.log(valueVerify);
 
@@ -45,3 +47,11 @@ module.exports = {
         console.log(req.body);
     }
 }
+
+function derToPem(der) {
+	var forge = require("node-forge");
+	var derKey = forge.util.decode64(der);
+	var asnObj = forge.asn1.fromDer(derKey);
+	var asn1Cert = forge.pki.certificateFromAsn1(asnObj);
+	return forge.pki.certificateToPem(asn1Cert);
+};
