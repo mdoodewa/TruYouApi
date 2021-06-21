@@ -23,7 +23,7 @@ module.exports = {
 
             console.log(signer.signData());
     
-            res.writeHead(200);
+            res.status(200).json({"nice":"nice"});
             
         // let certStore = new Map([["My Name", cert]]);
 
