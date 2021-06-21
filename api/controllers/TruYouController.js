@@ -1,9 +1,9 @@
-module.exports = {
-    update_stream_date: (req, res, next) => {
-        console.log(req.body);
-    },
 
-    get: (req, res, next) => {
-        console.log('get aangeroepen');
+
+module.exports = {
+
+    update_stream_data: (req, res, next) => {
+        res.status(200).json({'nice': 'nice'});
+        console.log(req.body);
     }
 }

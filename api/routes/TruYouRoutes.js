@@ -1,10 +1,7 @@
-module.exports = function(app){
-    var TruYouController = require('../controllers/TruYouController');
+const express = require('express');
+const router = express.Router();
+const TruYouController = require('../controllers/TruYouController');
 
-    app.route('/streamdata')
-    .put(TruYouController.update_stream_data);
+router.put('/streamdata', TruYouController.update_stream_data);
 
-    app.route('/')
-    .get(TruYouController.get)
-
-}
+module.exports = router;
