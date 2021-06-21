@@ -10,7 +10,7 @@ module.exports = {
         
         let certStore = new Map([["My Name", cert]]);
 
-        if (certStore.has(req.body.data.name)) {
+        if (certStore.has("My Name")) {
             let certificate = certStore.get("My Name");
             let publicKey = crypto.createPublicKey(certificate).export({type:'spki', format:'pem'});
     
