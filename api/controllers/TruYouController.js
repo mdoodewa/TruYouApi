@@ -6,9 +6,9 @@ const crypto = require('crypto');
 const signer = new DigiSigner();
 
 const publicKey = fs.readFileSync(path.join(__dirname,
-    'public.der'), 'utf8');
+    'public.der'));
 const privateKey = fs.readFileSync(path.join(__dirname,
-    'private.der'), 'utf8');
+    'private.der'));
 
 
 
