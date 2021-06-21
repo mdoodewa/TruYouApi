@@ -1,9 +1,8 @@
+
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-import DigiSigner from './DigiSinger';
-const signer = new DigiSigner();
 
 const publicKey = fs.readFileSync(path.join(__dirname,
     'public.der'), 'utf8');
@@ -15,7 +14,9 @@ const privateKey = fs.readFileSync(path.join(__dirname,
 module.exports = {
 
     update_stream_data: (req, res, next) => {
-        
+        import DigiSigner from './DigiSinger';
+        const signer = new DigiSigner();
+    
         let certStore = new Map([["My Name", cert]]);
 
         if (certStore.has("My Name")) {
