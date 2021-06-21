@@ -1,10 +1,13 @@
 const TruYouRoutes = require('./api/routes/TruYouRoutes');
+const bodyParser = require('body-parser');
 
 var express = require('express'),
 app = express(),
 port = process.env.PORT || 3000;
 
 app.listen(port);
+
+app.use(bodyParser());
 
 console.log('TruYou RESTful API server started on port: '+port);
 
