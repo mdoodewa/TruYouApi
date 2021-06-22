@@ -12,7 +12,7 @@ module.exports = {
 
     update_stream_data: (req, res, next) => {
         let actualData = "jorrit";
-        console.log("publickey" + publicKey)
+        console.log(publicKey)
         console.log(req.body.signature)
         let valueVerify = signer.verifySignature(publicKey, req.body.signature, actualData);
 
