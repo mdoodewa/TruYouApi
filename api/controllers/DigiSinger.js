@@ -24,6 +24,7 @@ class DigiSigner {
         let verifier = crypto.createVerify(this.algorithm);
         
         verifier.update(rawData);
+        // rawData = expected data: User/ Frame/ Timestamp
 
         return verifier.verify(publicKey, signature, this.securityEncoding);
     }

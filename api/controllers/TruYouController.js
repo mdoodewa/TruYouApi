@@ -7,6 +7,7 @@ const signer = new DigiSigner();
 
 const publicKey = fs.readFileSync(path.join(__dirname,
     'public.der'));
+
 const privateKey = fs.readFileSync(path.join(__dirname,
     'private.der'));
 
@@ -15,11 +16,8 @@ const privateKey = fs.readFileSync(path.join(__dirname,
 module.exports = {
 
     update_stream_data: (req, res, next) => {
-        let publicKeyPem = derToPem(publicKey);
-        let privateKeyPem = derToPem(privateKey);
-        let actualData = "myName";
-        let valueSign = signer.signData(actualData, privateKeyPem);
-        let valueVerify = signer.verifySignature(publicKeyPem, valueSign, actualData);
+        let actualData = "jorrit";
+        let valueVerify = signer.verifySignature(publicKey, req.body.signature, actualData);
 
             console.log(valueVerify);
 
