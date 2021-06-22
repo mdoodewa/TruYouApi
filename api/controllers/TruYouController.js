@@ -4,9 +4,12 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const signer = new DigiSigner();
-
 const publicKey = fs.readFileSync(path.join(__dirname,
     'public.der'));
+
+var prefix = '-----BEGIN CERTIFICATE-----\n';
+var postfix = '-----END CERTIFICATE-----';
+var pemText = prefix + publicKey.toString('base64').match(/.{0,64}/g).join('\n') + postfix;
 
 const privateKey = fs.readFileSync(path.join(__dirname,
     'private.der'));
@@ -17,12 +20,9 @@ module.exports = {
 
     update_stream_data: (req, res, next) => {
         let actualData = "jorrit";
-        let valueVerify = signer.verifySignature(publicKey, req.body.signature, actualData);
+        let valueVerify = signer.verifySignature(pemText, req.body.signature, actualData);
 
-            console.log(valueVerify);
-
-            console.log(signer.signData());
-    
+            console.log(valueVerify);    
             res.status(200).json({"nice":"nice"});
             
         // let certStore = new Map([["My Name", cert]]);
