@@ -19,7 +19,7 @@ module.exports = {
         console.log(buffer);
         
 
-        let valueVerify = signer.verifySignature(publicKey, buffer);
+        let valueVerify = signer.verifySignature(publicKey, buffer, actualData);
 
             console.log(valueVerify);    
             res.status(200).json({"nice":"nice"});

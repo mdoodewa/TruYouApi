@@ -2,7 +2,7 @@ const crypto = require('crypto');
 
 // Class used for signing and encoding of data
 class DigiSigner {
-    constructor(algorithm = 'RSA-SHA256', securityEncoding = 'hex') {
+    constructor(algorithm = 'RSA-SHA256', securityEncoding = 'base64') {
         this.algorithm = algorithm;
         this.securityEncoding = securityEncoding;
     }
@@ -23,7 +23,7 @@ class DigiSigner {
     verifySignature(publicKey, signature, rawData) {
         let verifier = crypto.createVerify(this.algorithm);
         
-        // verifier.update(rawData);
+        verifier.update(rawData);
         // rawData = expected data: User/ Frame/ Timestamp
 
         return verifier.verify(publicKey, signature);
