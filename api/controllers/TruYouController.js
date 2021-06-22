@@ -4,17 +4,9 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const signer = new DigiSigner();
+
 const publicKey = fs.readFileSync(path.join(__dirname,
-    'public.der'));
-
-var prefix = '-----BEGIN CERTIFICATE-----\n';
-var postfix = '-----END CERTIFICATE-----';
-var pemText = prefix + publicKey.toString('base64').match(/.{0,64}/g) + postfix;
-
-const privateKey = fs.readFileSync(path.join(__dirname,
-    'private.der'));
-
-
+    'publicKey.pem'));
 
 module.exports = {
 
