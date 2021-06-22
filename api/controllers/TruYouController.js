@@ -14,6 +14,9 @@ module.exports = {
         let actualData = "jorrit";
         console.log(publicKey)
         console.log(req.body.signature)
+        var decodedStringAtoB = atob(req.body.signature);
+        console.log(decodedStringAtoB);
+
         let valueVerify = signer.verifySignature(publicKey, req.body.signature, actualData);
 
             console.log(valueVerify);    
@@ -39,11 +42,3 @@ module.exports = {
         console.log(req.body);
     }
 }
-
-function derToPem(der) {
-	var forge = require("node-forge");
-	var derKey = forge.util.decode64(der);
-	var asnObj = forge.asn1.fromDer(derKey);
-	var asn1Cert = forge.pki.certificateFromAsn1(asnObj);
-	return forge.pki.certificateToPem(asn1Cert);
-};
