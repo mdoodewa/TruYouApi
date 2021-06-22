@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const signer = new DigiSigner();
-const atob = require('atob');
+
 
 const publicKey = fs.readFileSync(path.join(__dirname,
     'publicKey.pem'));
@@ -14,9 +14,8 @@ module.exports = {
     update_stream_data: (req, res, next) => {
         let actualData = "jorrit";
         console.log(publicKey)
-        console.log(req.body.signature)
-        var decodedStringAtoB = atob(req.body.signature);
-        console.log(decodedStringAtoB);
+        console.log(JSON.parse(req.body.signature))
+        
 
         let valueVerify = signer.verifySignature(publicKey, req.body.signature, actualData);
 
