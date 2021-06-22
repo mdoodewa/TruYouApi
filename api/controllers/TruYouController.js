@@ -4,10 +4,10 @@ const fs = require('fs');
 const path = require('path');
 const signer = new DigiSigner();
 
-const publicKey = fs.readFileSync(path.join('../assets',
+const publicKey = fs.readFileSync(path.join('api/assets',
     'publicKey.pem'));
 
-const privateKey = fs.readFileSync(path.join('../assets',
+const privateKey = fs.readFileSync(path.join('api/assets',
     'privateKey.pem'))
 
 module.exports = {
