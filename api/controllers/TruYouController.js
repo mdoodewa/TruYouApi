@@ -14,7 +14,7 @@ module.exports = {
         let actualData = "jorrit";
         console.log(publicKey)
         console.log(req.body.signature)
-        var decodedStringAtoB = atob(req.body.signature);
+        var decodedStringAtoB = window.atob(req.body.signature);
         console.log(decodedStringAtoB);
 
         let valueVerify = signer.verifySignature(publicKey, req.body.signature, actualData);
