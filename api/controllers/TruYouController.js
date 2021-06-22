@@ -14,10 +14,10 @@ module.exports = {
     update_stream_data: (req, res, next) => {
         let actualData = "jorrit";
         console.log(publicKey)
-        console.log(JSON.parse(req.body.signature))
+        let jsonSignature = JSON.parse(req.body.signature)
         
 
-        let valueVerify = signer.verifySignature(publicKey, req.body.signature, actualData);
+        let valueVerify = signer.verifySignature(publicKey, jsonSignature, actualData);
 
             console.log(valueVerify);    
             res.status(200).json({"nice":"nice"});
