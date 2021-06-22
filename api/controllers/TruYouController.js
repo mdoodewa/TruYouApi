@@ -15,9 +15,10 @@ module.exports = {
         let actualData = "jorrit";
         console.log(publicKey)
         let jsonSignature = JSON.parse(req.body.signature)
+        const buffer = Buffer.from(jsonSignature);
         
 
-        let valueVerify = signer.verifySignature(publicKey, jsonSignature, actualData);
+        let valueVerify = signer.verifySignature(publicKey, buffer, actualData);
 
             console.log(valueVerify);    
             res.status(200).json({"nice":"nice"});
