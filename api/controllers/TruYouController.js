@@ -8,11 +8,13 @@ const signer = new DigiSigner();
 const publicKey = fs.readFileSync(path.join(__dirname,
     'publicKey.pem'));
 
+
+
 module.exports = {
 
     update_stream_data: (req, res, next) => {
         let actualData = "jorrit";
-        let valueVerify = signer.verifySignature(pemText, req.body.signature, actualData);
+        let valueVerify = signer.verifySignature(publicKey, req.body.signature, actualData);
 
             console.log(valueVerify);    
             res.status(200).json({"nice":"nice"});
