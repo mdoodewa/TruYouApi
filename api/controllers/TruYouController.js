@@ -9,7 +9,7 @@ const publicKey = fs.readFileSync(path.join(__dirname,
 
 var prefix = '-----BEGIN CERTIFICATE-----\n';
 var postfix = '-----END CERTIFICATE-----';
-var pemText = prefix + publicKey.toString('base64').match(/.{0,64}/g).join('\n') + postfix;
+var pemText = prefix + publicKey.toString('base64').match(/.{0,64}/g) + postfix;
 
 const privateKey = fs.readFileSync(path.join(__dirname,
     'private.der'));
