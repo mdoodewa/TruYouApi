@@ -23,8 +23,8 @@ io.on('connection', (socket) => {
 
 console.log('user connected')
 
-socket.on('join', function(userNickname,chatroom) {
-    socket.join(chatroom)
+socket.on('join', function(userNickname,roomNumber) {
+    socket.join(roomNumber)
     
     console.log(roomNumber)   
 
@@ -33,7 +33,7 @@ socket.on('join', function(userNickname,chatroom) {
     socket.broadcast.emit('userjoinedthechat',userNickname +" : has joined the chat ");
 });
 
-socket.on('messagedetection', (messageContent,senderNickname, timeStamp, signature, chatroom) => {
+socket.on('messagedetection', (messageContent,senderNickname, timeStamp, signature, roomNumber) => {
        
     console.log(roomNumber)   
        //log the message in console 
@@ -44,9 +44,9 @@ socket.on('messagedetection', (messageContent,senderNickname, timeStamp, signatu
        let sign = {"signature":signature}
           // send the message to the client side  
           // console.log("test")
-       saveMessage(chatroom,messageContent, senderNickname, timeStamp, signature);
+       saveMessage(roomNumber ,messageContent, senderNickname, timeStamp, signature);
 
-       io.to(chatroom).emit('message', message, sign);
+       io.to(roomNumber).emit('message', message, sign);
     //    io.emit('message', message, sign);
     
      
@@ -82,7 +82,7 @@ async function saveMessage(roomNumber,messageContent,senderNickname, timeStamp, 
 
 
 server.listen(process.env.PORT || 5000,()=>{
-console.log('Node app is running on port 5000');
+console.log('Node app is running on port' + process.env.PORT);
 
 });
 
