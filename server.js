@@ -52,6 +52,13 @@ socket.on('messagedetection', (messageContent,senderNickname, timeStamp, signatu
      
       });
       
+      socket.on('new-message', (message, room) => {
+
+        console.log('new-message called', message, room);
+  
+        io.to(room).emit('goMessage', message);
+  
+      });
   
 socket.on('disconnect', function() {
     console.log( ' user has left ')
