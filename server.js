@@ -33,6 +33,12 @@ socket.on('join', function(userNickname,roomNumber) {
     socket.broadcast.emit('userjoinedthechat',userNickname +" : has joined the chat ");
 });
 
+socket.on('new-message', (data) => {
+
+  io.emit('goMessage', data);
+
+});
+
 socket.on('messagedetection', (messageContent,senderNickname, timeStamp, signature, roomNumber) => {
        
     console.log(roomNumber)   
