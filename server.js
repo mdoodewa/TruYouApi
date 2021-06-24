@@ -13,7 +13,6 @@ var roomNumber;
 
 client.connect(err => {
     
-  console.log(err)
   console.log("Connected to MongoDB")
 
   const collection = client.db("circle").collection("messages");
