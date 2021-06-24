@@ -81,8 +81,8 @@ async function saveMessage(roomNumber,messageContent,senderNickname, timeStamp, 
 }
 
 
-server.listen(3050,()=>{
-console.log('Node app is running on port 3000');
+server.listen(process.env.PORT || 5000,()=>{
+console.log('Node app is running on port 5000');
 
 });
 
