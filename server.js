@@ -1,32 +1,90 @@
-const TruYouRoutes = require('./api/routes/TruYouRoutes');
-const bodyParser = require('body-parser');
-
-var express = require('express'),
+var mongo = require("mongodb");
+var MongoClient = require('mongodb').MongoClient;
+const express = require('express'),
+http = require('http'),
 app = express(),
-port = process.env.PORT || 3000;
+server = http.createServer(app),
+io = require('socket.io').listen(server);
 
-app.listen(port);
+const uri = "mongodb+srv://admin:admin@cluster0.cdxaj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+var roomNumber;
 
-app.use(bodyParser());
 
-console.log('TruYou RESTful API server started on port: '+port);
+client.connect(err => {
+    
+  console.log(err)
+  console.log("Connected to MongoDB")
 
-app.use('/api', TruYouRoutes);
+  const collection = client.db("circle").collection("messages");
 
-app.all('*', (req, res, next) => {
-    console.log('Endpoint not found.')
 
-    const errorObject = {
-      message: 'Endpoint does not exist!',
-      code: 404,
-      date: new Date()
-    }
-    next(errorObject);
+
+io.on('connection', (socket) => {
+
+console.log('user connected')
+
+socket.on('join', function(userNickname,chatroom) {
+    socket.join(chatroom)
+    
+    console.log(roomNumber)   
+
+    console.log(userNickname +" : has joined the chat "  );
+
+    socket.broadcast.emit('userjoinedthechat',userNickname +" : has joined the chat ");
 });
 
-app.use((error, req, res, next) => {
-    console.warn('Error handler: ', error.message.toString());
-    res.status(error.code).json(error)
-  })
+socket.on('messagedetection', (messageContent,senderNickname, timeStamp, signature, chatroom) => {
+       
+    console.log(roomNumber)   
+       //log the message in console 
 
-module.exports = app;
+       console.log(senderNickname+" :" +messageContent)
+        //create a message object 
+       let  message = {"room":roomNumber,"message":messageContent, "senderNickname":senderNickname, "timeStamp": timeStamp}
+       let sign = {"signature":signature}
+          // send the message to the client side  
+          // console.log("test")
+       saveMessage(chatroom,messageContent, senderNickname, timeStamp, signature);
+
+       io.to(chatroom).emit('message', message, sign);
+    //    io.emit('message', message, sign);
+    
+     
+      });
+      
+  
+socket.on('disconnect', function() {
+    console.log( ' user has left ')
+    socket.broadcast.emit("userdisconnect"," user has left ") 
+    // client.close();
+    console.log("Client closed")
+});
+
+});
+
+
+async function saveMessage(roomNumber,messageContent,senderNickname, timeStamp, signature) {
+
+    
+    console.log('function saveMessage called.')
+    // const collection = client.db("circle").collection("messages");
+
+    let json = {
+        room: roomNumber,
+        msg: messageContent,
+        nickName: senderNickname,
+        time: timeStamp,
+        sig: signature
+    }; 
+
+   await collection.insertOne(json);
+}
+
+
+server.listen(3050,()=>{
+console.log('Node app is running on port 3000');
+
+});
+
+});
